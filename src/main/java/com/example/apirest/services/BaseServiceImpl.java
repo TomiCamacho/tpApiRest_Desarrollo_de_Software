@@ -4,6 +4,8 @@ import com.example.apirest.entities.Base;
 import com.example.apirest.entities.Persona;
 import com.example.apirest.repositories.BaseRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,6 +28,17 @@ public abstract class BaseServiceImpl <E extends Base, ID extends Serializable> 
             throw new Exception(e.getMessage());
         }
     }
+    @Override
+    @Transactional
+    public Page<E> findAll(Pageable pageable) throws Exception{
+        try{
+            Page<E> entities = baseRepository.findAll(pageable);
+            return entities;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
 
     @Override
     @Transactional
